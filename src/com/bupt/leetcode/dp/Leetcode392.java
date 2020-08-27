@@ -4,6 +4,7 @@ package com.bupt.leetcode.dp;
  * Leetcode392:判断子序列
  * @author Administrator
  */
+
 public class Leetcode392 {
     public boolean isSubsequence(String s, String t) {
         boolean flag =false;
