@@ -2,6 +2,7 @@ package com.bupt.leetcode.slidingwindows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -10,33 +11,42 @@ import java.util.List;
  */
 public class Leetcode567 {
     public static boolean checkInclusion(String s1, String s2) {
-        if (s1.length() > s2.length())
+        if (s1.length() > s2.length()){
             return false;
-        int[] s1map = new int[26];
-        int[] s2map = new int[26];
+        }
+        HashMap<Character,Integer> map1 = new HashMap<>();
+        HashMap<Character,Integer> map2 = new HashMap<>();
         for (int i = 0; i < s1.length(); i++) {
-            s1map[s1.charAt(i) - 'a']++;
-            s2map[s2.charAt(i) - 'a']++;
+            char c1 = s1.charAt(i);
+            map1.put(c1,map1.getOrDefault(c1,0) + 1);
+            char c2 = s2.charAt(i);
+            map2.put(c2,map2.getOrDefault(c2,0) + 1);
         }
         for (int i = 0; i < s2.length() - s1.length(); i++) {
-            if (matches(s1map, s2map))
+            if (map1.equals(map2)){
                 return true;
-            s2map[s2.charAt(i + s1.length()) - 'a']++;
-            s2map[s2.charAt(i) - 'a']--;
+            }
+            char temp = s2.charAt(i + s1.length());
+            char c = s2.charAt(i);
+            map2.put(temp,map2.getOrDefault(temp,0) + 1);
+            if (map2.get(c) == 1){
+                map2.remove(c);
+            }else {
+                map2.put(c,map2.get(c) - 1);
+            }
         }
-        return matches(s1map, s2map);
+        return map1.equals(map2);
     }
-    public static boolean matches(int[] s1map, int[] s2map) {
-        for (int i = 0; i < 26; i++) {
-            if (s1map[i] != s2map[i])
-                return false;
-        }
-        return true;
-    }
+
 
     public static void main(String[] args) {
         String s1 = "ab";
         String s2 = "eidbaooo";
-        System.out.println(checkInclusion(s1,s2));
+        if (checkInclusion(s1,s2)){
+            System.out.println("TRUE");
+        }else {
+            System.out.println("FALSE");
+        }
+
     }
 }
