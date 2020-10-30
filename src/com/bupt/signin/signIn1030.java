@@ -4,7 +4,7 @@ package com.bupt.signin;
  * Leetcode463:岛屿的周长
  * @author Administrator
  */
-public class signIn463 {
+public class signIn1030 {
 
     private int[][] directions = {{-1,0},{0,-1},{1,0},{0,1}};
 
