@@ -5,23 +5,20 @@ package com.bupt.leetcode.tree;
  * @author Administrator
  */
 public class Leetcode124 {
-    int maxSum = Integer.MIN_VALUE;
+    private int max = Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
-        maxGain(root);
-        return maxSum;
+        pathSum(root);
+        return max;
     }
 
-    public int maxGain(TreeNode root){
+    public int pathSum(TreeNode root){
         if (root == null){
             return 0;
         }
-        int leftGain = Math.max(0,maxGain(root.left));
-        int rightGain = Math.max(0,maxGain(root.right));
-
-        int rootSum = root.val + leftGain + rightGain;
-
-        maxSum = Math.max(maxSum,rootSum);
-
-        return root.val + Math.max(leftGain,rightGain);
+        int leftSum = Math.max(0,pathSum(root.left));
+        int rightSum = Math.max(0,pathSum(root.right));
+        int rootSum = root.val + leftSum + rightSum;
+        max = Math.max(max,rootSum);
+        return root.val + Math.max(leftSum,rightSum);
     }
 }
