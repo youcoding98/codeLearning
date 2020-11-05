@@ -8,49 +8,61 @@ import java.util.*;
  */
 public class signIn1105 {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        int result = 0;
-        Deque<String> deque = new LinkedList<>();
-        HashSet<String> set = new HashSet<>();
-        for (int i = 0; i < wordList.size(); i++) {
-            String s = wordList.get(i);
-            set.add(s);
+        //第1步：
+        Set<String> wordSet = new HashSet<>(wordList);
+        if (wordList.size() == 0 || !wordSet.contains(endWord)){
+            return 0;
         }
-        deque.offerLast(beginWord);
-        while (!deque.isEmpty()){
-            Deque<String> deque1 = new LinkedList<>();
-            while (!deque.isEmpty()){
-                String s1 = deque.removeFirst();
-                for (int i = 0; i < wordList.size(); i++) {
-                    String s = wordList.get(i);
-                    if (set.contains(s)){
-                        if (isChangeWord(s1,s)){
-                            set.remove(s);
-                            deque1.add(s);
-                            if (s.equals(endWord)){
-                                return result + 2;
-                            }
-                        }
-                    }
+        wordSet.remove(beginWord);
+
+        //图的广度优先遍历，必须使用队列和表示是否访问过的visited哈希表
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        Set<String> visited = new HashSet<>();
+        visited.add(beginWord);
+
+        //开始广度优先遍历
+        int step = 1;
+        while (!queue.isEmpty()){
+            int currentSize = queue.size();
+            for (int i = 0; i < currentSize; i++) {
+                //遍历当前队列中的单词
+                String currentWord = queue.poll();
+                //如果currentWord能够修改1个字符与ebdWord相同，则返回step+1
+                if (changeWordEveryOneLetter(currentWord, endWord, queue, visited, wordSet)) {
+                    return step + 1;
                 }
+
             }
-            deque = deque1;
-            result++;
+            step++;
         }
         return 0;
     }
 
-    public boolean isChangeWord(String s1,String s2){
-        if (s1.length() != s2.length()){
-            return false;
-        }
-        int count = 0;
-        for (int i = 0; i < s1.length(); i++) {
-            if (s1.charAt(i) != s2.charAt(i)){
-                count++;
+    private boolean changeWordEveryOneLetter(String currentWord,String endWord,Queue<String> queue,Set<String> visited,Set<String> wordSet){
+        char[] charArray = currentWord.toCharArray();
+        for (int i = 0; i < endWord.length(); i++) {
+            // 先保存，然后恢复
+            char originChar = charArray[i];
+            for (char k = 'a'; k <= 'z'; k++) {
+                if (k == originChar) {
+                    continue;
+                }
+                charArray[i] = k;
+                String nextWord = String.valueOf(charArray);
+                if (wordSet.contains(nextWord)) {
+                    if (nextWord.equals(endWord)) {
+                        return true;
+                    }
+                    if (!visited.contains(nextWord)) {
+                        queue.add(nextWord);
+                        // 注意：添加到队列以后，必须马上标记为已经访问
+                        visited.add(nextWord);
+                    }
+                }
             }
-        }
-        if (count == 1){
-            return true;
+            // 恢复
+            charArray[i] = originChar;
         }
         return false;
     }
