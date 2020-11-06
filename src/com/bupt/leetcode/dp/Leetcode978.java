@@ -5,7 +5,5 @@ package com.bupt.leetcode.dp;
  * @author Administrator
  */
 public class Leetcode978 {
-    /*public int maxTurbulenceSize(int[] A) {
 
-    }*/
 }
