@@ -16,16 +16,35 @@ public class Leetcode1254 {
         }
         rows = grid.length;
         cols = grid[0].length;
+        marked = new boolean[rows][cols];
         if (rows <= 2 || cols <= 2){
             return 0;
         }
+        int count = 0;
         this.grid = grid;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (grid[i][j] == 0){
-
+                if (grid[i][j] == 0 && !marked[i][j]){
+                    if (dfs(i,j)){
+                        count++;
+                    }
                 }
             }
         }
+        return count;
+    }
+
+    private boolean dfs(int i, int j){
+        if (i == 0 || i == rows - 1 || j == 0 || j == cols - 1){
+            if (grid[i][j] == 0){
+                return false;
+            }
+        }
+        if (i > 0 && i < rows - 1 && j > 0 && j < cols - 1 && !marked[i][j] && grid[i][j] == 0){
+            marked[i][j] = true;
+            return dfs(i+1,j) & dfs(i-1,j) & dfs(i,j+1) & dfs(i,j-1);
+        }
+
+        return true;
     }
 }
