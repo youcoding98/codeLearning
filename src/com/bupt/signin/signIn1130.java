@@ -30,10 +30,10 @@ public class signIn1130 {
         PriorityQueue<Character> queue = new PriorityQueue<>(new Comparator<Character>() {
             @Override
             public int compare(Character o1, Character o2) {
-                if (nums[o2 - 'a'] >= nums[o1 - 'a']){
-                    return 1;
-                }else{
+                if (nums[o2 - 'a'] < nums[o1 - 'a']){
                     return -1;
+                }else{
+                    return 1;
                 }
                 //return  nums[o2 - 'a'] - nums[o1 - 'a'];
             }
