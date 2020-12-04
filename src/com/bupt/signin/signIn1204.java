@@ -15,11 +15,11 @@ public class signIn1204 {
                 map.put(x,new PriorityQueue<>());
             }
             if (map.containsKey(x-1)){
-                int preLength = map.get(x - 1).poll();
+                int preMinLength = map.get(x - 1).poll();
                 if (map.get(x - 1).isEmpty()){
                     map.remove(x-1);
                 }
-                map.get(x).offer(preLength + 1);
+                map.get(x).offer(preMinLength + 1);
             }else {
                 map.get(x).offer(1);
             }
