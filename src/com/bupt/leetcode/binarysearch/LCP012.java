@@ -5,7 +5,7 @@ package com.bupt.leetcode.binarysearch;
  * @author Administrator
  */
 public class LCP012 {
-    public int minTime(int[] time, int m) {
+    /*public int minTime(int[] time, int m) {
         
-    }
+    }*/
 }

@@ -30,5 +30,6 @@ public class Offer009 {
             stack1.push(stack2.pop());
         }
         return result;
+
     }
 }
