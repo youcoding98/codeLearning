@@ -6,10 +6,7 @@ package com.bupt.jianzhioffer;
  */
 public class Offer022 {
     public ListNode getKthFromEnd(ListNode head, int k) {
-        if (k == 0){
-            return null;
-        }
-        if (head == null){
+        if (k == 0 || head == null){
             return null;
         }
         ListNode newHead = new ListNode(0);
