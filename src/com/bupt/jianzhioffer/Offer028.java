@@ -11,8 +11,8 @@ public class Offer028 {
         }
         return isSymmetricHelp(root.left,root.right);
     }
-
     public boolean isSymmetricHelp(TreeNode A,TreeNode B){
+
         if (A == null && B == null){
             return true;
         }
@@ -22,6 +22,6 @@ public class Offer028 {
         if (A.val != B.val){
             return false;
         }
-        return isSymmetricHelp(A.left, B.right) && isSymmetricHelp(A.right,B.left);
+        return isSymmetricHelp(A.left,B.right) && isSymmetricHelp(A.right,B.left);
     }
 }
