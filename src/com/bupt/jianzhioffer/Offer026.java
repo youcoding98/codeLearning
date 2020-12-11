@@ -10,10 +10,9 @@ public class Offer026 {
         if (B == null || A == null){
             return false;
         }
-        return isSubTree(A,B) || isSubStructure(A.left,B) || isSubStructure(A.right,B);
+        return isSubStructure(A.left,B) || isSubStructure(A.right,B) ||isSubTree(A,B);
     }
-
-    public boolean isSubTree(TreeNode A,TreeNode B){
+    public boolean isSubTree(TreeNode A, TreeNode B){
         if (B == null){
             return true;
         }
