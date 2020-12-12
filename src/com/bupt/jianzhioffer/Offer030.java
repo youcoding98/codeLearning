@@ -5,16 +5,16 @@ package com.bupt.jianzhioffer;
  * @author gy
  */
 public class Offer030 {
-    private Node head;
+    private Node1 head;
     public Offer030() {
 
     }
 
     public void push(int x) {
         if (head == null){
-            head = new Node(x,x,null);
+            head = new Node1(x,x,null);
         }else {
-            head = new Node(x,Math.min(head.min,x),head);
+            head = new Node1(x,Math.min(head.min,x),head);
         }
     }
 
@@ -31,12 +31,12 @@ public class Offer030 {
     }
 }
 
-class Node{
+class Node1{
     int val;
     int min;
-    Node next;
+    Node1 next;
 
-    public Node(int val, int min, Node next) {
+    public Node1(int val, int min, Node1 next) {
         this.val = val;
         this.min = min;
         this.next = next;
