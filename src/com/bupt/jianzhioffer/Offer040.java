@@ -10,30 +10,56 @@ import java.util.PriorityQueue;
  * @author Administrator
  */
 public class Offer040 {
+    /**
+     * 快排思想求解
+     * @param arr
+     * @param k
+     * @return
+     */
     public int[] getLeastNumbers(int[] arr, int k) {
         if (arr == null || arr.length == 0 || k == 0){
             return new int[]{};
         }
-        //默认小顶堆.大顶堆需要重写比较方法
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2 - o1;
+        return quickSort(arr,0,arr.length - 1,k-1);
+    }
+
+    public int[] quickSort(int[] nums,int left,int right,int k){
+        int j = partition(nums,left,right);
+        if (j == k){
+            return Arrays.copyOf(nums,j + 1);
+        }
+        if (j > k){
+            return quickSort(nums, left, j - 1, k);
+        }else {
+            return quickSort(nums, j + 1, right, k);
+        }
+    }
+    /**
+     * 快排切分，返回下标j,使得比nums[j]小的数都在j的左边
+     * @param nums
+     * @param left
+     * @param right
+     * @return
+     */
+    public int partition(int[] nums,int left,int right){
+        int v = nums[left];
+        int i = left,j = right + 1;
+        while (true){
+            while (++i <= right && nums[i] < v) {
+
             }
-        });
-        for (int i = 0; i < k; i++) {
-            priorityQueue.offer(arr[i]);
-        }
-        for (int i = k; i < arr.length; i++) {
-            if (arr[i] < priorityQueue.peek()){
-                priorityQueue.poll();
-                priorityQueue.offer(arr[i]);
+            while (--j >= left && nums[j] > v) {
+
             }
+            if (i >= j){
+                break;
+            }
+            int temp = nums[j];
+            nums[j] = nums[i];
+            nums[i] = temp;
         }
-        int[] result = new int[k];
-        for (int i = 0; i < k; i++) {
-            result[i] = priorityQueue.poll();
-        }
-        return result;
+        nums[left] = nums[j];
+        nums[j] = v;
+        return j;
     }
 }
