@@ -11,45 +11,47 @@ import java.util.List;
  */
 public class Offer038 {
     List<String> result = new ArrayList<>();
-    boolean[] used;
+    boolean[] isUsed;
     StringBuilder sb = new StringBuilder();
     public String[] permutation(String s) {
-        int len = s.length();
-        if (len == 0) {
-            return new String[0];
+        if (s == null || s.length() == 0){
+            return new String[]{};
         }
+        int len = s.length();
+        isUsed = new boolean[len];
         char[] charArray = s.toCharArray();
         Arrays.sort(charArray);
-        used = new boolean[len];
         dfs(charArray,0);
-        String[] s1 = new String[result.size()];
-        int i = 0;
-        for (String temp:result) {
-            s1[i++] = temp;
+        String[] strings = new String[result.size()];
+        int index = 0;
+        for (String s1: result) {
+            strings[index++] = s1;
         }
-        return s1;
+        return strings;
     }
-
     public void dfs(char[] charArray,int depth){
+        //递归结束条件
         if (depth == charArray.length){
             result.add(sb.toString());
             return;
         }
+        //按顺序枚举
         for (int i = 0; i < charArray.length; i++) {
+            //排除不合适的选择
             char c = charArray[i];
-            if (used[i]){
+            if (isUsed[i]){
                 continue;
             }
-            if (i > 0 && used[i - 1] && charArray[i-1] == charArray[i]){
+            if (i > 0 && isUsed[i - 1] && charArray[i - 1] == c){
                 continue;
             }
-
-            used[i] = true;
+            //做选择
+            isUsed[i] = true;
             sb.append(c);
-
+            //进入下一层选择
             dfs(charArray,depth + 1);
-
-            used[i] = false;
+            //回溯
+            isUsed[i] = false;
             sb.deleteCharAt(sb.length() - 1);
         }
     }
