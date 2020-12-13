@@ -8,21 +8,20 @@ import java.util.*;
  */
 public class Offer045 {
     public String minNumber(int[] nums) {
-        List<String> list = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (int num:nums) {
-            list.add(String.valueOf(num));
+            result.add(String.valueOf(num));
         }
-        Collections.sort(list, new Comparator<String>() {
+        Collections.sort(result, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
                 return (o1 + o2).compareTo(o2 + o1);
             }
         });
-
-        String result = "";
-        for (String s:list) {
-            result += s;
+        StringBuilder sb = new StringBuilder();
+        for (String s:result) {
+            sb.append(s);
         }
-        return result;
+        return sb.toString();
     }
 }
