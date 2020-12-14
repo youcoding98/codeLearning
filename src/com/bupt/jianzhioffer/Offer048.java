@@ -1,6 +1,9 @@
 package com.bupt.jianzhioffer;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Offer048:最长不含重复字符的子字符串
@@ -8,18 +11,17 @@ import java.util.HashMap;
  */
 public class Offer048 {
     public int lengthOfLongestSubstring(String s) {
+        Map<Character,Integer> map = new HashMap<>();
         int result = 0;
-        int len = s.length();
-        int start = 0;
-        int end = 0;
-        HashMap<Character,Integer> map = new HashMap<>();
-        for (end = 0; end < len; end++) {
-            char c = s.charAt(end);
-            if (map.containsValue(c)){
-                start = Math.max(start,map.get(c) + 1);
+        int i = -1, j = 0;
+        while (j < s.length()){
+            char c = s.charAt(j);
+            if (map.containsKey(c)){
+                i = Math.max(map.get(c),i);
             }
-            map.put(c,end);
-            result = Math.max(result,end - start + 1);
+            map.put(c,j);
+            result = Math.max(j- i,result);
+            j++;
         }
         return result;
     }
