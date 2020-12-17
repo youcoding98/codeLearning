@@ -6,15 +6,15 @@ package com.bupt.leetcode.dp;
  */
 public class Leetcode121 {
     public int maxProfit(int[] prices) {
-        int l = prices.length;
-        if (l < 2){
+        int len = prices.length;
+        if (len < 2){
             return 0;
         }
+        int minPrices = prices[0];
         int result = 0;
-        int minPrice = prices[0];
-        for (int i = 1; i < l; i++) {
-            result = Math.max(result,prices[i]-minPrice);
-            minPrice = Math.min(minPrice,prices[i]);
+        for (int i = 1; i < len; i++) {
+            result = Math.max(prices[i] - minPrices,result);
+            minPrices = Math.min(minPrices,prices[i]);
         }
         return result;
     }
