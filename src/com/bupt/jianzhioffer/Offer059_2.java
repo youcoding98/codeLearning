@@ -1,19 +1,20 @@
 package com.bupt.jianzhioffer;
 
+import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Offer59_2:队列的最大值
+ * Offer059_2:队列的最大值
  * @author Administrator
  */
-class Offer59_2 {
-    Queue<Integer> queue;
+class Offer059_2 {
     Deque<Integer> deque;
-    public Offer59_2() {
+    Queue<Integer> queue;
+    public Offer059_2() {
+        deque = new ArrayDeque<>();
         queue = new LinkedList<>();
-        deque = new LinkedList<>();
     }
 
     public int max_value() {
@@ -25,10 +26,10 @@ class Offer59_2 {
 
     public void push_back(int value) {
         while (!deque.isEmpty() && deque.peekLast() < value){
-            deque.pollLast();
+            deque.removeLast();
         }
-        deque.offerLast(value);
-        queue.offer(value);
+        deque.addLast(value);
+        queue.add(value);
     }
 
     public int pop_front() {
@@ -37,7 +38,7 @@ class Offer59_2 {
         }
         int ans = queue.poll();
         if (ans == deque.peekFirst()){
-            deque.pollFirst();
+            deque.removeFirst();
         }
         return ans;
     }
