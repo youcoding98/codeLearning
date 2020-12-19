@@ -9,7 +9,7 @@ import java.util.List;
  * @author Administrator
  */
 public class Offer062 {
-    public static int lastRemaining(int n, int m) {
+    /*public static int lastRemaining(int n, int m) {
         if (n == 1){
             return 0;
         }
@@ -23,6 +23,20 @@ public class Offer062 {
             list.remove(index);
         }
         return list.get(0);
+    }*/
+
+    /**
+     * 数学方法求解
+     * @param n
+     * @param m
+     * @return
+     */
+    public static int lastRemaining(int n, int m) {
+        int ans = 0;
+        for (int i = 2; i <= n; i++) {
+            ans = (ans + m) % i;
+        }
+        return ans;
     }
 
     public static void main(String[] args) {
