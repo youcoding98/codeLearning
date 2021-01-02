@@ -1,6 +1,8 @@
 package com.bupt.jianzhioffer;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 /**
@@ -9,24 +11,29 @@ import java.util.List;
  */
 public class Offer059_1 {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        List<Integer> list = new ArrayList<>();
         if (nums == null || nums.length == 0){
-            return nums;
+            return new int[]{};
         }
-        int left = 0;
-        int right = k - 1;
+        List<Integer> list = new ArrayList<>();
+        Deque<Integer> queue = new ArrayDeque<>();
+        int left = 0, right = 0;
         while (right < nums.length){
-            int max = Integer.MIN_VALUE;
-            for (int i = left; i <= right; i++) {
-                max = Math.max(max,nums[i]);
+            if (!queue.isEmpty() && queue.peek() <= right - k){
+                queue.removeFirst();
             }
-            list.add(max);
-            left++;
+            while (!queue.isEmpty() && nums[queue.peekLast()] < nums[right]){
+                queue.removeLast();
+            }
+            queue.addLast(right);
+            if (right >= k - 1){
+                list.add(nums[queue.peek()]);
+            }
             right++;
         }
         int[] result = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            result[i] = list.get(i);
+        int index = 0;
+        for (int num:list) {
+            result[index++] = num;
         }
         return result;
     }

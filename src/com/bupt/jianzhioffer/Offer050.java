@@ -8,25 +8,19 @@ import java.util.HashMap;
  */
 public class Offer050 {
     public char firstUniqChar(String s) {
-        if (s.length() == 0 || s == null){
+        if (s.equals("")){
             return ' ';
         }
-        HashMap<Character,Integer> map = new HashMap<>();
-        for (int i = 0; i < s.length(); i++) {
-            char c= s.charAt(i);
-            if (map.containsKey(c)){
-                map.put(c,map.get(c) + 1);
-            }else {
-                map.put(c,1);
+        int[] nums = new int[26];
+        char[] array = s.toCharArray();
+        for (char c:array) {
+            nums[c - 'a']++;
+        }
+        for (char c:array) {
+            if (nums[c - 'a'] == 1){
+                return c;
             }
         }
-        char result = ' ';
-        for (int i = 0; i < s.length(); i++) {
-            if (map.get(s.charAt(i)) == 1){
-                result = s.charAt(i);
-                break;
-            }
-        }
-        return result;
+        return ' ';
     }
 }

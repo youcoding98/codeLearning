@@ -7,25 +7,25 @@ import java.util.HashMap;
  * @author gy
  */
 
-class Node {
+class Node2 {
     int val;
-    Node next;
-    Node random;
+    Node2 next;
+    Node2 random;
 
-    public Node(int val) {
+    public Node2(int val) {
         this.val = val;
         this.next = null;
         this.random = null;
     }
 }
 public class Offer035 {
-    public Node copyRandomList(Node head) {
+    public Node2 copyRandomList(Node2 head) {
         if (head == null){
             return null;
         }
-        Node cur = head;
+        Node2 cur = head;
         while (cur != null){
-            Node copyNode = new Node(cur.val);
+            Node2 copyNode = new Node2(cur.val);
             copyNode.next = cur.next;
             cur.next = copyNode;
             cur = cur.next.next;
@@ -39,8 +39,8 @@ public class Offer035 {
         }
 
         cur = head;
-        Node copyNode = head.next;
-        Node copyCur = head.next;
+        Node2 copyNode = head.next;
+        Node2 copyCur = head.next;
         while (cur != null){
             cur.next = cur.next.next;
             cur = cur.next;

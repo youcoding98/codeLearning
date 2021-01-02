@@ -1,21 +1,21 @@
-package com.bupt.leetcode.dp;
+package com.bupt.jianzhioffer;
 
 /**
- * Leetcode121:买卖股票的最佳时机
+ * Offer063:股票的最大利润
  * @author Administrator
  */
-public class Leetcode121 {
+public class Offer063 {
     public int maxProfit(int[] prices) {
         int len = prices.length;
         if (len < 2){
             return 0;
         }
+        int maxProfit = 0;
         int minPrices = prices[0];
-        int result = 0;
         for (int i = 1; i < len; i++) {
-            result = Math.max(prices[i] - minPrices,result);
+            maxProfit = Math.max(maxProfit,prices[i] - minPrices);
             minPrices = Math.min(minPrices,prices[i]);
         }
-        return result;
+        return maxProfit;
     }
 }
