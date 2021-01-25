@@ -9,8 +9,8 @@ import java.util.Collections;
 public class SimpleSort {
 
     public static void main(String[] args) {
-        int[] arr = {1,1,2,0,9,3,12,7,8,3,4,65,22};
-        countSort(arr);
+        int[] arr = {4,9,3,7,1};
+        heapSort(arr);
         for (int i:arr) {
             System.out.print(i + " ");
         }
@@ -149,8 +149,61 @@ public class SimpleSort {
      * 堆排序
      * @param nums
      */
-    public static void heapSort(int[] nums){
+    private static void heapSort(int[] nums) {
+        int len = nums.length;
+        //将乱序数组调整为大根堆
+        for (int i = len / 2 - 1; i > -1; --i) {
+            heapAdjust(nums, i, len);
+        }
+        //元素出堆、循环堆调整
+        for (int i = len - 1; i > 0; --i) {
+            //交换i和0两个元素，使用位运算完成
+            swap(nums, i, 0);
+            //堆调整
+            heapAdjust(nums, 0, i);
+        }
+        //arr排序完毕
+    }
+    /**
+     * 交换数组中两个数，使用位运算
+     */
+    private static void swap(int[] arr, int i, int j) {
+        arr[i] ^= arr[j];
+        arr[j] ^= arr[i];
+        arr[i] ^= arr[j];
+    }
+    /**
+     * 堆调整
+     */
+    private static void heapAdjustOld(int[] arr, int s, int length) {
+        for (int i = 2 * s + 1; i < length; i = 2 * i + 1) {
+            if (i + 1 < length && arr[i + 1] > arr[i]) {
+                ++i;
+            }
+            if (arr[s] > arr[i]) {
+                break;
+            }
+            swap(arr, s, i);
+            s = i;
+        }
 
+    }
+    /**
+     * 堆调整优化方法
+     */
+    private static void heapAdjust(int[] arr, int s, int length) {
+        int temp = arr[s];
+        for (int j = 2 * s + 1; j < length; j =  j * 2 + 1) {
+            if (j + 1 < length && arr[j + 1] > arr[j]) {
+                ++j;
+            }
+            if (temp > arr[j]) {
+                break;
+            }
+            arr[s] = arr[j];
+            s = j;
+        }
+        arr[s] = temp;
     }
 
     /**
