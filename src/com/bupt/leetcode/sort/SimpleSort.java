@@ -147,22 +147,22 @@ public class SimpleSort {
 
     /**
      * 堆排序
-     * @param nums
+     * @param arr
      */
-    private static void heapSort(int[] nums) {
-        int len = nums.length;
-        //将乱序数组调整为大根堆
-        for (int i = len / 2 - 1; i > -1; --i) {
-            heapAdjust(nums, i, len);
+
+    public static void heapSort(int [] arr){
+        //1.构建大顶堆
+        for(int i = arr.length / 2 - 1;i >= 0;i--){
+            //从第一个非叶子结点从下至上，从右至左调整结构
+            adjustHeap(arr,i,arr.length);
         }
-        //元素出堆、循环堆调整
-        for (int i = len - 1; i > 0; --i) {
-            //交换i和0两个元素，使用位运算完成
-            swap(nums, i, 0);
-            //堆调整
-            heapAdjust(nums, 0, i);
+        //2.调整堆结构+交换堆顶元素与末尾元素
+        for(int j = arr.length - 1;j > 0;j--){
+            //将堆顶元素与末尾元素进行交换
+            swap(arr,0,j);
+            //重新对堆进行调整
+            adjustHeap(arr,0,j);
         }
-        //arr排序完毕
     }
     /**
      * 交换数组中两个数，使用位运算
@@ -191,19 +191,25 @@ public class SimpleSort {
     /**
      * 堆调整优化方法
      */
-    private static void heapAdjust(int[] arr, int s, int length) {
-        int temp = arr[s];
-        for (int j = 2 * s + 1; j < length; j =  j * 2 + 1) {
-            if (j + 1 < length && arr[j + 1] > arr[j]) {
-                ++j;
+    public static void adjustHeap(int []arr,int i,int length){
+        //先取出当前元素i
+        int temp = arr[i];
+        //从i结点的左子结点开始，也就是2i+1处开始
+        for(int k = i * 2 + 1;k < length;k = k * 2 + 1){
+            //如果左子结点小于右子结点，k指向右子结点
+            if(k+1 < length && arr[k] < arr[k+1]){
+                k++;
             }
-            if (temp > arr[j]) {
+            //如果子节点大于父节点，将子节点值赋给父节点（不用进行交换）
+            if(arr[k] > temp){
+                arr[i] = arr[k];
+                i = k;
+            }else{
                 break;
             }
-            arr[s] = arr[j];
-            s = j;
         }
-        arr[s] = temp;
+        //将temp值放到最终的位置
+        arr[i] = temp;
     }
 
     /**
